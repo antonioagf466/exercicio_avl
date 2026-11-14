@@ -24,6 +24,8 @@ class ArvoreAVL:
 
     def _rotacao_direita(self, y):
         """Rotação simples à direita (caso Esquerda-Esquerda)."""
+        """prestar atencao em ambas as rotacoes que passamos y como parametro e x é o filho em questao(seja para esquerda ou direita) e t2 é FILHO DE x
+        seja para esquerda ou direita tambem dependendo do caso, e ai rotacionamos para o lado em questao"""
         x = y.esquerda
         T2 = x.direita
 
@@ -66,6 +68,9 @@ class ArvoreAVL:
         self._atualizar_altura(no_atual)
 
         balanceamento = self._fator_balanceamento(no_atual)
+        """Prestar atencao que o balanceamento nao eh baseado na raiz ele eh baseado POR NO e soh pode ficar desbalanceado quando inserimos ou removemos
+        a arvore nao precisa ser simetrica para estar balanceada, e os unicos nos que podem sair de balanceamento sao os que estao envolvidos na troca
+        (adicao ou remocao)"""
 
 
         if balanceamento > 1 and numero < no_atual.esquerda.numero:
@@ -96,9 +101,12 @@ class ArvoreAVL:
         return self._buscar_recursivo(no_atual.direita, numero)
     
     def calcular_altura(self):
+        """folhas 0, raiz o maior numero da altura"""
         return self._obter_altura(self.raiz)
     
     def contar_nos(self):
+        """Contagens abaixo, todos os números na arvore são nós mas apenas números que não tem nenhum filho são folhas, 
+        ou seja sempre terao mais nós que folhas"""
         return self._contar_nos_recursivo(self.raiz)
 
     def _contar_nos_recursivo(self, no_atual):
@@ -127,6 +135,9 @@ class ArvoreAVL:
         return atual
 
     def remover(self, numero):
+        """A remocao funciona procurando o numero acima do numero removido que seja mais proximo, ou seja vai para a direita e depois 
+        para e esquerda ao maximo possivel, copia o numero que encontra e depois deleta o numero que foi copiado, caso o numero copiado tenha um filho a direita
+        o filho a direita tem um reatach no vô porque cai no remover recursivo que ja preve isto adicionando o nó a direita no temp e reatando temp a arvore"""
         """Interface pública para remoção."""
         self.raiz = self._remover_recursivo(self.raiz, numero)
 
